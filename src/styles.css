@@ -1,0 +1,94 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --radius-sm: calc(var(--radius) - 3px);
+  --radius-md: calc(var(--radius) - 1px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 3px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-signal: var(--signal);
+  --color-signal-foreground: var(--signal-foreground);
+  --color-ink: var(--ink);
+  --color-surface: var(--surface);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: oklch(0.22 0.04 260);
+  --foreground: oklch(0.98 0.01 260);
+  --card: oklch(0.26 0.05 260);
+  --card-foreground: oklch(0.98 0.01 260);
+  --popover: oklch(0.26 0.05 260);
+  --popover-foreground: oklch(0.98 0.01 260);
+  --primary: oklch(0.70 0.18 260);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.28 0.06 260);
+  --secondary-foreground: oklch(0.96 0.02 260);
+  --muted: oklch(0.28 0.05 260);
+  --muted-foreground: oklch(0.75 0.03 260);
+  --accent: oklch(0.32 0.08 260);
+  --accent-foreground: oklch(0.98 0.02 260);
+  --signal: oklch(0.65 0.2 250);
+  --signal-foreground: oklch(0.99 0.01 250);
+  --ink: oklch(0.18 0.04 260);
+  --surface: oklch(0.24 0.04 260);
+  --destructive: oklch(0.58 0.22 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.35 0.04 260);
+  --input: oklch(0.38 0.05 260);
+  --ring: oklch(0.65 0.2 260);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body { background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans); }
+  h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0; }
+  :focus-visible { outline: 3px solid color-mix(in oklab, var(--ring) 45%, transparent); outline-offset: 2px; }
+}
+
+@utility page-shell { width: min(100% - 2rem, 76rem); margin-inline: auto; }
+@utility section-pad { padding-block: clamp(4.5rem, 8vw, 7.5rem); }
+@utility subtle-grid {
+  background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, black, transparent 88%);
+}
+@utility elevated { box-shadow: 0 18px 50px color-mix(in oklab, var(--ink) 10%, transparent); }
+@utility float-soft { animation: float-soft 7s ease-in-out infinite; }
+@utility reveal-up { animation: reveal-up .7s ease-out both; }
+@utility reveal-scroll { animation: reveal-scroll both; animation-timeline: view(); animation-range: entry 5% cover 28%; }
+
+@keyframes float-soft { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
+@keyframes reveal-up { from { opacity: 0; transform: translateY(18px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes reveal-scroll { from { opacity: 0; transform: translateY(28px) } to { opacity: 1; transform: translateY(0) } }
+
+main > section:not(:first-child) { animation: reveal-scroll both; animation-timeline: view(); animation-range: entry 3% cover 24%; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
